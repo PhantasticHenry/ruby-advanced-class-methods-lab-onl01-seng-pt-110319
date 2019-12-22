@@ -1,37 +1,36 @@
-require 'pry'
-
-class Song
+class Song 
+    
   attr_accessor :name, :artist_name
   @@all = []
-
-  def self.all
-    @@all
-  end
-
-  def save
-    self.class.all << self
+  
+  def self.all 
+    @@all 
   end
   
-  def self.create
-   song = self.new
-   self.all << song
-   song
+  def save 
+    self.class.all << self
+  end 
+  
+  def self.create 
+    song = self.new 
+    @@all << song 
+    song 
   end
   
   def self.new_by_name(title)
-    song = self.new
-    song.name = title
+    song = self.create
+    song.name = title 
     song
   end
   
   def self.create_by_name(title)
     song = self.create 
-    song.name = title
+    song.name = title 
     song
   end
   
   def self.find_by_name(title)
-    result = self.all.detect {|song| song.name == title }
+    result = self.all.detect {|song| song.name == title}
     result
   end
   
@@ -39,43 +38,59 @@ class Song
     result = self.find_by_name(title)
     if result
       result
-    else
+    else 
       self.create_by_name(title)
     end
   end
-    
-    def self.alphabetical
-      sorted_songs = self.all.sort_by {|song| song.name}
-      sorted_songs
-  ##### figure method below is not passing #####
-      # sorted_songs = self.all.sort_by do |song| 
-      #   song.name
-      #   sorted_songs
-      # end
-    end
   
-    def self.new_from_filename(file_name)
-  #file_name = "Thundercat - For Love I Come.mp3"
-      song_array = file_name.split(" - ")
-      song_array[1] = song_array[1].chomp(".mp3")
+  def self.alphabetical
+    sorted_songs = self.all.sort_by {|song| song.name}
+    sorted_songs
+  end
+  
+  def self.new_from_filename(title)
       song = self.new
-      song.name = song_array[1]
-      song.artist_name = song_array[0]
+      title = title.split(" - ")
+      song.name = title[1].chomp(".mp3")
+      song.artist_name = title[0]
       song
-    end
-    
-    def self.create_from_filename(filename)
-    result = self.new_from_filename(filename)
+  end
+  
+  def self.create_from_filename(title)
     song = self.create
-    song.name = result.name
-    song.artist_name = result.artist_name
+    title = title.split(" - ")
+    song.name = title[1].chomp(".mp3")
+    song.artist_name = title[0]
     song
-    end
-    
-    def self.destroy_all
-      self.all.clear  
-    end
-end
+  end
+  
+  def self.destroy_all
+    self.all.clear
+  end 
+
+end 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   
